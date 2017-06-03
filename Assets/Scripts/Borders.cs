@@ -12,5 +12,7 @@ public class Borders : MonoBehaviour {
 		Camera camMain = Camera.main;
 		topLeft.position = camMain.ScreenToWorldPoint(new Vector3 (0, Screen.height, topLeft.position.y - camMain.transform.position.y));
 		bottomRight.position = camMain.ScreenToWorldPoint(new Vector3 (Screen.width, 0, bottomRight.position.y - camMain.transform.position.y));
+		if (ColorManager.instance)
+			ColorManager.instance.ColorShift ();
 	}
 }

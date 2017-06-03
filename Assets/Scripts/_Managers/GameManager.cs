@@ -7,9 +7,9 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public enum g_States {Menu, Play, Pause, GameOver};
 
-	public Movement m_Player;
+	public GameObject m_Player;
 	public TriggerGates m_Gates;
-
+	private Movement m_PlayerMov;
 	private g_States Game_State;
 	public g_States CurrentState{
 		get{ 
@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	void Awake(){
 		instance = this;
 		Game_State = g_States.Menu;
+		m_PlayerMov = m_Player.GetComponent<Movement> ();
 	}
 
 
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void setDelegates (){
-		LockOn locker = m_Player.getLockOn ();
+		LockOn locker = m_PlayerMov.getLockOn ();
 		if (locker.GetType () == typeof(LockOnPlayer)) {
 			LockOnPlayer locked = locker as LockOnPlayer;
 			locked.GameOver += PlayerDied;
@@ -39,21 +40,34 @@ public class GameManager : MonoBehaviour {
 	}
 
 	void PlayerDied(int score){
-		Time.timeScale = 0;
+//		Time.timeScale = 0;
 		Game_State = g_States.GameOver;
+
 	}
 
+//	public void revivePlayer(){
+//		if (Game_State == g_States.GameOver) {
+//			m_Player.SetActive (true);
+//		}
+//	}
+
 	public void EnableAssets(){
-		m_Player.enabled = true;
+		m_PlayerMov.enabled = true;
 		m_Gates.EnableAssets ();
 	}
 
 	public void Paused(){
+		m_PlayerMov.enabled = false;
 		Game_State = g_States.Pause;
 	}
 
 	public void Resume(){
+		m_PlayerMov.enabled = true;
 		Game_State = g_States.Play;
+	}
+
+	public void ReturnToMenu(){
+		Game_State = g_States.Menu;
 	}
 
 

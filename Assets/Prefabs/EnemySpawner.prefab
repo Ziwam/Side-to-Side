@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camMain: {fileID: 0}
   EnemiesToSpawn:
-  - {fileID: 1301075188963280, guid: 108b23deb6548ba4dba6982389f0987f, type: 2}
+  - {fileID: 1898215925475426, guid: df2dee64835953148839a0ce728ef687, type: 2}
   SpawnOffset: 0.5
   SpawnBuffer: 0.8
   SpawnTime: 7

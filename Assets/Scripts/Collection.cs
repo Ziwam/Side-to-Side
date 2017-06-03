@@ -64,7 +64,7 @@ public class Collection : MonoBehaviour {
 		info.setIndex(index.ToString());
 		info.setUnlocked(item.unlocked.ToString());
 		info.setCost(item.cost.ToString());
-		info.setPrefab(item.image, item.size, item.rotation);
+		info.setPrefab(item.image,item.particleDisplay,item.size);
 		info.setActive(item.active);
 		info.checkIfEquipped();
 
@@ -72,7 +72,7 @@ public class Collection : MonoBehaviour {
 
 	public void SetCategory(){
 		Banners.Clear();
-		m_Container.anchoredPosition = new Vector3(0,0,0);
+		m_Container.anchoredPosition = new Vector3(0,-22,0);
 
 		UpdateCollection();
 //		scrollbar.decelerationRate = 0;
@@ -127,6 +127,10 @@ public class Collection : MonoBehaviour {
 			}
 			updateBanners();
 		}
+	}
+
+	public void resetContentPos(){
+		m_Container.anchoredPosition = new Vector3(0,-22,0);
 	}
 
 }

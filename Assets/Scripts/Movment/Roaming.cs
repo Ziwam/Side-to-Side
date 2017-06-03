@@ -12,7 +12,7 @@ public class Roaming : Movement {
 	public float raylength;
 	public float offset;
 
-	private List<Transform> Obstacles;
+	public List<Transform> Obstacles;
 	private float radius;
 
 	// Use this for initialization
@@ -21,6 +21,10 @@ public class Roaming : Movement {
 		radius = col.radius*2*transform.localScale.x;
 		DirectionalValue = Random.value > .5f ? -1 : 1;
 		TurnValue = Random.value > .5f ? -1 : 1;
+	}
+
+	void OnDisable(){
+		Obstacles.Clear ();
 	}
 	
 	// Update is called once per frame

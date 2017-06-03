@@ -52,7 +52,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camMain: {fileID: 0}
-  CoinsToSpawn: []
+  CoinsToSpawn:
+  - {fileID: 1689504778994000, guid: 67b418471741c3a4889c57d4c5eaa1d9, type: 2}
   SpawnOffset: 0
   SpawnBuffer: 0.91
   SpawnTime: 4.5
+  SpawnMax: 6

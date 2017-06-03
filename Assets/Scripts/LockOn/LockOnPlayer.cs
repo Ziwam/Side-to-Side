@@ -17,21 +17,24 @@ public class LockOnPlayer : LockOn {
 	void OnDisable(){
 		if(GameManager.instance.CurrentState == GameManager.g_States.Play)
 		GameOver (score);
+		if(GameManager.instance.CurrentState != GameManager.g_States.Menu)
+		Instantiate (m_explode, transform.position, Quaternion.identity);
 	}
 
 	protected override void prepareLaunch ()
 	{
 		col_timer += Time.deltaTime;
-		sprtRen.color = Color.Lerp (rest_Color, locked_Color, col_timer / LockOnShift);
+		sprtRen.material.color = Color.Lerp (rest_Color, locked_Color, col_timer / LockOnShift);
 		if (Input.GetKey ("space"))
 			Launch ();
 	}
 
 	protected override void restLaunch ()
 	{
-		sprtRen.color = rest_Color;
+		
 		col_timer = 0;
-		laser.enabled = false;
+		lineLaser.enabled = false;
+
 	}
 		 
 
@@ -39,8 +42,8 @@ public class LockOnPlayer : LockOn {
 	{
 		GameObject obj = col.gameObject;
 		if(obj.tag == CollectTag){
-			AddCoin (obj.GetComponent<Coin> ().Value);
-			Destroy (obj);
+			AddCoin (obj.GetComponent<Coin> ().Collect());
+			obj.SetActive (false);
 		}else if (obj.CompareTag(TargetTag)) {
 			Gate gate = obj.GetComponent<Gate> ();
 			if (gate != null && gate.IsActive) {

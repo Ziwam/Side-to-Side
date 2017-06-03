@@ -10,7 +10,7 @@ public class ShopManager : MonoBehaviour {
 	public delegate void DelegateInt(int num);
 	public DelegateInt Wallet;
 
-	public SpriteRenderer m_PlayerSprite;
+	public Accessories m_PlayerAcc;
 
 	[SerializeField]
 	private Purchasable[] Skins;
@@ -102,7 +102,8 @@ public class ShopManager : MonoBehaviour {
 	}
 
 	void setSkin(Purchasable obj){
-		m_PlayerSprite.sprite = obj.GetComponent<Skin> ().getSkin ();
+		m_PlayerAcc.setSprite(obj.GetComponent<Skin> ().getSkin ());
+		m_PlayerAcc.setParticle(obj.GetComponent<Skin> ().getParticle ());
 	}
 
 	public bool purchase(int index){

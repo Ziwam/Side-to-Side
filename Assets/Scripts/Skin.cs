@@ -3,9 +3,13 @@ using System.Collections;
 
 public class Skin : Purchasable {
 
-	public Sprite skin;
+	public GameObject particle;
 
-	public Sprite getSkin(){
-		return skin;
+	public Material getSkin(){
+		return image;
+	}
+
+	public GameObject getParticle(){
+		return particle;
 	}
 }

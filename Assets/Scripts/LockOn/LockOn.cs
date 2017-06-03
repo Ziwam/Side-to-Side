@@ -8,23 +8,26 @@ public abstract class LockOn : MonoBehaviour {
 	public float Attforce;
 	public Color rest_Color;
 	public Color locked_Color;
+	public Color zoom_Color;
 	public float LockOnShift;
 	public float ZoomCooldown;
-	public Image laser;
+	public LineRenderer lineLaser;
 	public RectTransform mask;
 	public string TargetTag;
 	public float delayLaunch;
+	public GameObject m_explode;
 
-	protected SpriteRenderer sprtRen;
+	protected MeshRenderer sprtRen;
 	protected float col_timer;
 	protected bool zooming;
 	protected Transform parentTrans;
 	protected GameObject parentGameObj;
-	protected List<Transform> Targets;
-	protected Transform target;
+	public List<Transform> Targets;
+	public Transform target;
 
 	private Vector2 startPos;
 	private Rigidbody2D body;
+	private AudioSource m_Zoom;
 
 	// Use this for initialization
 	protected virtual void Awake () {
@@ -32,7 +35,8 @@ public abstract class LockOn : MonoBehaviour {
 		parentTrans = transform.parent.transform;
 		parentGameObj = parentTrans.gameObject;
 		body = transform.parent.GetComponent<Rigidbody2D> ();
-		sprtRen = transform.parent.GetComponent<SpriteRenderer> ();
+		sprtRen = transform.parent.GetComponent<MeshRenderer> ();
+		m_Zoom = transform.parent.GetComponent<AudioSource> ();
 		zooming = false;
 	}
 	
@@ -47,7 +51,7 @@ public abstract class LockOn : MonoBehaviour {
 		int alive = Targets.Count;
 		if (Time.frameCount % 14 == 0 && alive > 0) {
 			for (int i = Targets.Count - 1; i > -1; i--) {
-				if (!Targets [i])
+				if (!Targets [i].gameObject.activeInHierarchy)
 					Targets.RemoveAt (i);
 			}
 		}
@@ -55,6 +59,7 @@ public abstract class LockOn : MonoBehaviour {
 
 	void LockOnto ()
 	{
+		target = null;
 		if (!target && Targets.Count>0) {
 			for (int i = 0; i < Targets.Count; i++) {
 				if (Targets [i])
@@ -62,14 +67,18 @@ public abstract class LockOn : MonoBehaviour {
 			}
 		}
 		if (target) {
-			Vector3 diff = target.position - parentTrans.position;
-			float rot_z = Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg;
-			transform.rotation = Quaternion.Euler (0, 0, rot_z);
+			lineLaser.SetPosition(0,parentTrans.position);
+			lineLaser.SetPosition(1,target.position);
+
+
+//			Vector3 diff = target.position - parentTrans.position;
+//			float rot_z = Mathf.Atan2 (diff.y, diff.x) * Mathf.Rad2Deg;
+//			transform.rotation = Quaternion.Euler (0, 0, rot_z);
 			prepareLaunch ();
-			if (laser.enabled) {
-				float dis = Vector2.Distance (target.position, parentTrans.position);
-				mask.sizeDelta = new Vector2(dis,.39f);
-			}
+//			if (laser.enabled) {
+//				float dis = Vector2.Distance (target.position, parentTrans.position);
+//				mask.sizeDelta = new Vector2(dis,.39f);
+//			}
 
 
 		} else if(col_timer != 0 || !target) {
@@ -83,6 +92,7 @@ public abstract class LockOn : MonoBehaviour {
 		
 	void stopZoom(){
 		zooming = false;
+		sprtRen.material.color = rest_Color;
 	}
 
 
@@ -92,7 +102,7 @@ public abstract class LockOn : MonoBehaviour {
 		if (!target && obj.tag == TargetTag && !Targets.Contains(objtrans)) {
 			target = objtrans;
 			Targets.Add (objtrans);
-			laser.enabled = true;		
+			lineLaser.enabled = true;
 		}else if (obj.tag == TargetTag && !Targets.Contains(objtrans)) {
 			Targets.Add (obj.transform);
 		}
@@ -131,8 +141,10 @@ public abstract class LockOn : MonoBehaviour {
 			zooming = true;
 			Vector2 dir = target.position - parentTrans.position;
 			body.AddForce ((dir / dir.magnitude) * (Attforce*body.mass));
-			sprtRen.color = rest_Color;
+			sprtRen.material.color = zoom_Color;
 			col_timer = 0;
+			if (JukeBox.instance.getSFX())
+				m_Zoom.Play ();
 			CancelInvoke ();
 			Invoke ("stopZoom", ZoomCooldown);
 		}

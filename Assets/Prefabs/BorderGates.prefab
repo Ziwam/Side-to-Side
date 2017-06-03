@@ -175,6 +175,8 @@ MonoBehaviour:
   Vertical: 0
   Opposite: 1
   thickness: 0.2
+  DirectLight: {fileID: 1486417358259046, guid: 0cd2d011f63283748ae3f120041b2c74,
+    type: 2}
 --- !u!114 &114233562127761950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -187,7 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numBoxes: 1
-  m_Gate: {fileID: 114606229675049218, guid: e23f35d700e2f8c42b5c6314278c70aa, type: 2}
+  m_Gate: {fileID: 114743520144608370, guid: 26888d01f8e19bc4e834bb82bb584c56, type: 2}
   m_EnemySpawner: {fileID: 0}
   m_CoinSpawner: {fileID: 0}
   Gate_Top: {fileID: 114612984054475248}
@@ -209,6 +211,8 @@ MonoBehaviour:
   Vertical: 0
   Opposite: 0
   thickness: 0.2
+  DirectLight: {fileID: 1172590488993556, guid: 5ed2ccf2fb488024180df724302eb3a4,
+    type: 2}
 --- !u!114 &114390408319132614
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -224,6 +228,8 @@ MonoBehaviour:
   Vertical: 1
   Opposite: 1
   thickness: 0.2
+  DirectLight: {fileID: 1956526163554674, guid: f600c00e386291947932d3d701417e91,
+    type: 2}
 --- !u!114 &114612984054475248
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,3 +245,5 @@ MonoBehaviour:
   Vertical: 1
   Opposite: 0
   thickness: 0.2
+  DirectLight: {fileID: 1590231393363818, guid: 016ea21d644ec944ea7a796a9f00ae0a,
+    type: 2}

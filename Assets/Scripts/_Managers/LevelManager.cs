@@ -7,6 +7,8 @@ public class LevelManager : MonoBehaviour {
 
 	public static LevelManager instance;
 
+	public bool restart = false;
+
 	// Use this for initialization
 	void Awake () {
 		if (!instance) {

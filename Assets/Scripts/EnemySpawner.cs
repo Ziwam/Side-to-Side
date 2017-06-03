@@ -11,42 +11,51 @@ public class EnemySpawner : MonoBehaviour {
 	public float SpawnBuffer;
 //	public int ActiveLimit = 4;
 	public int SpawnTime = 4;
-	public int StartTime=0;
+	public int StartTime = 0;
 
-	private List<GameObject> ActiveEnemies;
+//	private List<GameObject> ActiveEnemies;
 	private float timer;
 	private float DimensionsX;
 	private float DimensionsY;
 	private int maxSpawn;
+	private ObjectPooling enemyPool;
+	private int ticket;
 
 	// Use this for initialization
 	void Awake () {
-		ActiveEnemies = new List<GameObject> ();
+//		ActiveEnemies = new List<GameObject> ();
 		DimensionsX = camMain.ScreenToWorldPoint (new Vector3( Screen.width, 0, 0)).x + SpawnOffset;
 		DimensionsY = camMain.ScreenToWorldPoint (new Vector3( 0, Screen.height, 0)).y + SpawnOffset;
+		enemyPool = ObjectPooling.instance;
+		if (enemyPool)
+			ticket = enemyPool.CreateList (EnemiesToSpawn [0], 5, true);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		cleanEnemyList ();
-	}
+//	// Update is called once per frame
+//	void Update () {
+//		cleanEnemyList ();
+//	}
+//
+//	void cleanEnemyList ()
+//	{
+//		int alive = ActiveEnemies.Count;
+//		if (Time.frameCount % 14 == 0 && alive > 0) {
+//			for (int i = ActiveEnemies.Count - 1; i > -1; i--) {
+//				if (!ActiveEnemies [i])
+//					ActiveEnemies.RemoveAt (i);
+//			}
+//		}
+//	}
 
-	void cleanEnemyList ()
-	{
-		int alive = ActiveEnemies.Count;
-		if (Time.frameCount % 14 == 0 && alive > 0) {
-			for (int i = ActiveEnemies.Count - 1; i > -1; i--) {
-				if (!ActiveEnemies [i])
-					ActiveEnemies.RemoveAt (i);
-			}
-		}
-	}
-
-	void setMass(float num){
-		num = Mathf.Pow((num/26f),1.8f)+1;
+	void setProps(float num){
+		float mass = (num/50)+.95f;
+		float delay = ((-1*num)/300)+.57f;
+		delay = Mathf.Clamp (delay,0.3f, .5f);
+		List<GameObject> ActiveEnemies = enemyPool.getList (ticket);
 		for (int i = ActiveEnemies.Count - 1; i > -1; i--) {
-			if (ActiveEnemies [i])
-				ActiveEnemies [i].GetComponent<Movement> ().setMass (num);
+			GameObject enem = ActiveEnemies [i];
+			if (enem)
+				enem.GetComponent<Movement> ().setProps (mass,delay);
 		}
 	}
 
@@ -56,7 +65,7 @@ public class EnemySpawner : MonoBehaviour {
 		if (ActiveLimit > maxSpawn)
 			maxSpawn = ActiveLimit;
 
-		int alive = ActiveEnemies.Count;
+		int alive = enemyPool.numActive (ticket);
 		if (alive < maxSpawn) {
 			int spawnNum = maxSpawn - alive;
 			GameObject obj;
@@ -74,67 +83,55 @@ public class EnemySpawner : MonoBehaviour {
 						//SPAWN 4
 						if (spawnNum - 4 >= 0) {
 							//TOP
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (deltax, DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (deltax, DimensionsY, 0), Quaternion.identity);
 							//BOTTOM
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket,new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity);
 							//RIGHT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (DimensionsX, deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (DimensionsX, deltay, 0), Quaternion.identity);
 							//LEFT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity);
 							//							Debug.Log ("SPAWN 4");
-							setMass (triggered);
+							setProps (triggered);
 							return;
 						}
 						if (Random.value > .5f) {
 							//TOP
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (deltax, DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (deltax, DimensionsY, 0), Quaternion.identity);
 							//BOTTOM
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity);
 						}
 						else {
 							//RIGHT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (DimensionsX, deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (DimensionsX, deltay, 0), Quaternion.identity);
 							//LEFT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity);
 						}
 						//						Debug.Log ("SPAWN 2");
-						setMass (triggered);
+						setProps (triggered);
 						return;
 					}
 					if (Random.value > .5f) {
 						if (Random.value > .5f) {
 							//TOP
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (deltax, DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (deltax, DimensionsY, 0), Quaternion.identity);
 						}
 						else {
 							//BOTTOM
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (-1 * deltax, -1 * DimensionsY, 0), Quaternion.identity);
 						}
 					}
 					else {
 						if (Random.value > .5f) {
 							//RIGHT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (DimensionsX, deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (DimensionsX, deltay, 0), Quaternion.identity);
 						}
 						else {
 							//LEFT
-							obj = Instantiate (EnemiesToSpawn [0], new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity) as GameObject;
-							ActiveEnemies.Add (obj);
+							obj = enemyPool.getObject (ticket, new Vector3 (-1 * DimensionsX, -1 * deltay, 0), Quaternion.identity);
 						}
 					}
 					//					Debug.Log ("SPAWN 1");
-					setMass (triggered);
+					setProps (triggered);
 					return;
 				}
 			}

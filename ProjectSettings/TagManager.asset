@@ -23,10 +23,10 @@ TagManager:
   - LockOn
   - Collectable
   - Gate
-  - 
-  - 
-  - 
-  - 
+  - Top
+  - Bottom
+  - Left
+  - Right
   - 
   - 
   - 

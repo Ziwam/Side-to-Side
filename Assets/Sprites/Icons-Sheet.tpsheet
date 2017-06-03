@@ -1,0 +1,37 @@
+#
+# Sprite sheet data for Unity.
+#
+# To import these sprites into your Unity project, download "TexturePackerImporter":
+# http://www.codeandweb.com/texturepacker/unity
+#
+# $TexturePacker:SmartUpdate:182fa2966dc685e826d59dd0017ca625:fe27f6124b618918934222fd5080ba44:35e1431932eaa8ee0c9baf6158d1e886$
+#
+:format=40000
+:texture=Icons-Sheet.png
+:size=1576x4792
+:pivotpoints=enabled
+
+add-song;1;4279;512;512;0.5;0.5
+cancel-music;532;4279;512;512;0.5;0.5
+checked-symbol-1;1063;4279;512;512;0.5;0.5
+clockwise-refresh-arrow;1;3748;512;512;0.5;0.5
+cog-wheel-silhouette;532;3748;512;512;0.5;0.5
+computer-tablet;1063;3748;512;512;0.5;0.5
+cross-mark-on-a-black-circle-background;1;3217;512;512;0.5;0.5
+down-arrow;532;3217;512;512;0.5;0.5
+favorite-mark;1063;3217;512;512;0.5;0.5
+film-strip-with-two-photograms;1;2686;512;512;0.5;0.5
+gift-box;532;2686;512;512;0.5;0.5
+hand-pointing-upward;1063;2686;512;512;0.5;0.5
+house-black-building-shape;1;2155;512;512;0.5;0.5
+information-symbol;532;2155;512;512;0.5;0.5
+music-player-pause-lines;1063;2155;512;512;0.5;0.5
+music-player-play;1;1624;512;512;0.5;0.5
+numbered-list;532;1624;512;512;0.5;0.5
+question-sign;1063;1624;512;512;0.5;0.5
+sharp-crown;1;1093;512;512;0.5;0.5
+skull-and-bones-symbol;532;1093;512;512;0.5;0.5
+three-circles;1063;1093;512;512;0.5;0.5
+trophy;1;562;512;512;0.5;0.5
+volume-adjustment-mute;532;562;512;512;0.5;0.5
+volume-control;1063;562;512;512;0.5;0.5

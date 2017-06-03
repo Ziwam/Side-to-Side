@@ -13,6 +13,7 @@ public class GateBorder : MonoBehaviour {
 	public bool Vertical;
 	public bool Opposite;
 	public float thickness;
+	public GameObject DirectLight;
 
 	private List<Gate> gates;
 	private Camera camMain;
@@ -28,6 +29,33 @@ public class GateBorder : MonoBehaviour {
 		camMain = Camera.main;
 		gates = new List<Gate> ();
 		screenAspect = camMain.aspect;
+	}
+
+	void Start(){
+		createLight ();
+	}
+
+	void createLight(){
+		float height = camMain.orthographicSize;
+		float width = height * screenAspect;
+
+		float arg1 = 0;
+		float arg2 = 0;
+
+		if (Vertical) {
+			arg1 = 0;
+			arg2 = height;
+			if(Opposite)
+				arg2 *= -1;
+		} else {
+			arg1 = width;
+			arg2 = 0;
+			if(Opposite)
+				arg1 *= -1;
+		}
+
+		Instantiate (DirectLight, new Vector3 (arg1, arg2, 0), Quaternion.Euler (0, 0, Angle+180));
+
 	}
 
 	void sortGates(){
@@ -54,10 +82,10 @@ public class GateBorder : MonoBehaviour {
 					arg1 *= -1;
 				arg3 = height * (2f / numBoxes);
 			}
-
+				
 			Vector3 pos = new Vector3 (arg1, arg2, 0);
 			gate.transform.position = pos;
-			gate.transform.localScale = new Vector3 (arg3, thickness, 1);
+			gate.ChangeScale(new Vector3 (arg3, thickness, 1));
 		}	
 
 	}
@@ -158,6 +186,19 @@ public class GateBorder : MonoBehaviour {
 			obj.Triggered += GateClosed;
 			obj.Activated += GateActivated;
 			obj.Gate_Index = numBoxes;
+
+			string lay = "";
+			if (Vertical) {
+				lay = "Top";
+				if(Opposite)
+					lay = "Bottom";
+			} else {
+				lay = "Right";
+				if(Opposite)
+					lay = "Left";
+			}
+			obj.setShadowLayer (lay);
+
 			gates.Add (obj);
 			numBoxes++;
 		}

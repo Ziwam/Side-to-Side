@@ -9,22 +9,29 @@ public class Gate : MonoBehaviour {
 	public delegate void DelegateInt(int num);
 	public DelegateInt Activated;
 
+	public LightTransform m_light;
+	public ParticleSystem m_particle;
+	public int toEmit;
 	public Color col_On;
+	public Color col_Off;
+	public AudioSource m_Beep;
 
 	private bool active;
-	private Color col_Off;
-	private SpriteRenderer spit_ren;
+	private MeshRenderer spit_ren;
 	private int index;
 
 	void Awake(){
-		spit_ren = GetComponent<SpriteRenderer> ();
-		col_Off = spit_ren.color;
+		spit_ren = GetComponent<MeshRenderer> ();
+		spit_ren.material.color = col_Off;
 	}
 
 	public void CloseGate(){
 		if (IsActive) {
+			m_particle.Emit (toEmit);
 			IsActive = false;
 			Triggered ();
+			if (JukeBox.instance.getSFX())
+				m_Beep.Play ();
 		}
 	}
 
@@ -38,10 +45,12 @@ public class Gate : MonoBehaviour {
 		{
 			active = value;
 			if (active) {
-				spit_ren.color = col_On;
+				spit_ren.material.color = col_On;
 				Activated (index);
+				m_light.LightActive = true;
 			} else {
-				spit_ren.color = col_Off;
+				spit_ren.material.color = col_Off;
+				m_light.LightActive = false;
 			}
 		}
 	}
@@ -51,6 +60,15 @@ public class Gate : MonoBehaviour {
 		{
 			index = value;
 		}
+	}
+
+	public void ChangeScale(Vector3 scl){
+		transform.localScale = scl;
+//		m_light.ShiftShadowTransform (scl.x);
+	}
+
+	public void setShadowLayer(string lay){
+		m_light.changeLayer (lay);
 	}
 
 }

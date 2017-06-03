@@ -7,8 +7,8 @@ public class Purchasable : MonoBehaviour {
 	public string description;
 	public float cost;
 	public int unlocked;
-	public Sprite image;
+	public Material image;
+	public GameObject particleDisplay;
 	public float size;
-	public float rotation;
 	public bool active;
 }

@@ -51,10 +51,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7fa7b62b45ad740a359bf09f25a89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_PlayerSprite: {fileID: 0}
+  m_PlayerAcc: {fileID: 0}
   Skins:
   - {fileID: 114835219510009620, guid: 0c2b19dfbeea9174d8047f9287c1eb73, type: 2}
-  - {fileID: 114835219510009620, guid: 5615594c0111bb54fa6ea8bdbae63ced, type: 2}
-  - {fileID: 114835219510009620, guid: e38f84c04ff0a524daaf72bd3bb66764, type: 2}
-  - {fileID: 114835219510009620, guid: 6c805ce171537984a9debc72011cfb49, type: 2}
-  - {fileID: 114835219510009620, guid: 230a1c45905856f429d3e85f45b19ef7, type: 2}
+  - {fileID: 114835219510009620, guid: 547cb5ff3d369814097b95137c3db614, type: 2}
+  - {fileID: 114835219510009620, guid: 47855660e9ce3fe40b7fdcd5ef1db336, type: 2}
+  - {fileID: 114835219510009620, guid: cb70fc7b7c11fda4dafd3f72b73bb5c0, type: 2}
+  - {fileID: 114835219510009620, guid: f4345aba42b0ec7469081b036d5eb8ee, type: 2}
+  - {fileID: 114835219510009620, guid: f1dd65dca36831041b19f0325b367e43, type: 2}
+  - {fileID: 114835219510009620, guid: 0287c8917e4a37442a9d5dc94b73667e, type: 2}
+  - {fileID: 114835219510009620, guid: 33009b64700a7934c92d0a91fce1b9d2, type: 2}

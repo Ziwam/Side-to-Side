@@ -8,8 +8,11 @@ public class Display : MonoBehaviour {
 	public Text m_Index;
 	public Text m_Unlocked;
 	public Text m_Cost;
-	public Image prefab;
-	public GameObject Sticker;
+	public MeshRenderer m_sprite;
+	public RectTransform image;
+	public GameObject m_prefab;
+	public Image Sticker;
+	public Button m_Button;
 	public bool active;
 
 	protected Collection m_collection;
@@ -19,7 +22,7 @@ public class Display : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
 		checkIfEquipped();
-		click = Sticker.GetComponent<Button>();
+		click = m_Button;
 		click.onClick.AddListener(() => clickButton());
 		changeButton(1);
 	}
@@ -67,23 +70,23 @@ public class Display : MonoBehaviour {
 		}
 	}
 
-	public void setPrefab(Sprite obj, float size, float rot){
-		prefab.sprite = obj;
-		prefab.SetNativeSize ();
-		prefab.rectTransform.localScale = new Vector3(size/100,size/100,0);
-		prefab.rectTransform.rotation = Quaternion.AngleAxis(rot,Vector3.forward);
+	public void setPrefab(Material obj, GameObject part, float size){
+		m_sprite.material = obj;
+		GameObject intsant = Instantiate (part,new Vector3(0,-1000,0),Quaternion.identity,m_prefab.transform) as GameObject;
+		intsant.GetComponent<RectTransform> ().localPosition = new Vector3 (0, 0, -30);
+		image.localScale = new Vector3 (size, size, 0);
 	}
 
 	public virtual void changeButton(int i){
 		int num = int.Parse(m_Unlocked.text);
 		if(i == 2 && num == 0){
-			Sticker.GetComponent<SpriteFrameArray>().frameIndex = 0;
+			Sticker.enabled = false;
 		}else if(active){
-			Sticker.GetComponent<SpriteFrameArray>().frameIndex = 1;
+			Sticker.enabled = true;
 		}else if(num == 0){
-			Sticker.GetComponent<SpriteFrameArray>().frameIndex = 0;
+			Sticker.enabled = false;
 		}else{
-			Sticker.GetComponent<SpriteFrameArray>().frameIndex = 2;
+			Sticker.enabled = false;
 		}
 
 	}

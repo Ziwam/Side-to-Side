@@ -51,12 +51,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b798ae54503e17542a026b2de84a99ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Txt_Display: {fileID: 0}
+  Cin_Display: {fileID: 0}
+  Bst_Display: {fileID: 0}
+  Scr_Divider: {fileID: 0}
+  Gift: {fileID: 0}
   BestScore: {fileID: 0}
   RecentScore: {fileID: 0}
   Coins: {fileID: 0}
+  Scores: {fileID: 0}
   PauseMenu: {fileID: 0}
   GameplayMenu: {fileID: 0}
   GameOverMenu: {fileID: 0}
   MenuItems: {fileID: 0}
+  m_Tutorial: {fileID: 0}
   m_Player: {fileID: 0}
